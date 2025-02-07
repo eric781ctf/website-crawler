@@ -3,6 +3,7 @@ import json
 import pandas as pd
 from bs4 import BeautifulSoup
 import re
+import time
 
 
 """
@@ -80,27 +81,35 @@ def parse_all_link(content_data):
 
 
 #%%
-channel_code = {
-    "時政要聞":"A093601",
-    "辦領導動態":"A09370102",
-    "網信發布":"A093702",
-    "政策法規":"A093703",
-    "互聯網內容管理":"A093704",
-    "清朗系列專項行動":"A093711",
-    "網絡安全":"A093705",
-    "數據治理":"A093708",
-    "信息化":"A093706",
-    "國際交流":"A093707",
-    "更多工作":"A093709",
-    }
-
-num_pages = 2
-data_dict = {}
-for channel in channel_code:
-    code = channel_code[channel]
-    data_dict = crawl_url(code, num_pages, data_dict)
+if __name__ == "__main__":
+    channel_code = {
+        "時政要聞":"A093601",
+        "辦領導動態":"A09370102",
+        "網信發布":"A093702",
+        "政策法規":"A093703",
+        "互聯網內容管理":"A093704",
+        "清朗系列專項行動":"A093711",
+        "網絡安全":"A093705",
+        "數據治理":"A093708",
+        "信息化":"A093706",
+        "國際交流":"A093707",
+        "更多工作":"A093709",
+        }
     
-after_parse = parse_all_link(data_dict)
+    num_pages = 2
+    data_dict = {}
+    for channel in channel_code:
+        code = channel_code[channel]
+        data_dict = crawl_url(code, num_pages, data_dict)
+        
+    after_parse = parse_all_link(data_dict)
+
+    timestamp = time.localtime()
+    date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", timestamp)
+    json_path = './{date_time_str}.json'
+    
+    with open(json_path,'w',enoding='utf-8')as file:
+        json.dump(after_parse, file)
 
 #%%
 
