@@ -106,13 +106,10 @@ if __name__ == "__main__":
 
     timestamp = time.localtime()
     date_time_str = time.strftime("%Y-%m-%d %H:%M:%S", timestamp)
-    json_path = './{date_time_str}.json'
+    json_path = f'./{date_time_str}.json'
     
-    with open(json_path,'w',enoding='utf-8')as file:
+    with open(json_path, 'w', encoding='utf-8') as file:
         json.dump(after_parse, file)
-
-#%%
-
 
 
 
